@@ -3,9 +3,11 @@ package components;
 import static java.lang.Math.sqrt;
 
 public class Lancador extends  Thread{
+    private int posicaoLancador[];
     private Carregador carregador;
 
-    public Lancador(Carregador carregador) {
+    public Lancador(Carregador carregador, int posicaoLancador[]) {
+        this.posicaoLancador = posicaoLancador;
         this.carregador = carregador;
     }
 

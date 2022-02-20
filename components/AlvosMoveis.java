@@ -22,40 +22,34 @@ public class AlvosMoveis extends Thread implements IalvosMoveis{
         return Id;
     }
 
-    public void setId(long id) {
-        Id = id;
-    }
-
     public int[] getPontoDeOrigem() {
         return pontoDeOrigem;
-    }
-
-    public void setPontoDeOrigem(int[] pontoDeOrigem) {
-        this.pontoDeOrigem = pontoDeOrigem;
     }
 
     public int[] getPontoDeDestino() {
         return pontoDeDestino;
     }
 
-    public void setPontoDeDestino(int[] pontoDeDestino) {
-        this.pontoDeDestino = pontoDeDestino;
-    }
-
     public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
+    public void setTimestamp(long timestamp) {this.timestamp = timestamp;}
+
+    public void setAtingido(boolean atiangido){this.atingido = atiangido;}
+
 
     @Override
     public int[] localizacaoAtualizada() throws InterruptedException {
-        sleep(freqAtualizacaoPosicao);
-        atualizaPosicao();
-        //System.out.println(localizacaoAtualizada[1] + "  " + localizacaoAtualizada[0]);
-        return localizacaoAtualizada;
+        if(localizacaoAtualizada[1] < pontoDeDestino[1]) {
+            sleep(freqAtualizacaoPosicao);
+            atualizaPosicao();
+            return localizacaoAtualizada;
+        }
+        else {
+            chegadaDestino = true;
+            return pontoDeDestino;
+        }
     }
 
     private void atualizaPosicao(){
