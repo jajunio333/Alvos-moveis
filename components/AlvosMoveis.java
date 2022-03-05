@@ -1,7 +1,7 @@
 package components;
 
 public class AlvosMoveis extends Thread implements IalvosMoveis{
-    private int pontoDeOrigem[], pontoDeDestino[],localizacaoAtualizada[];
+    private final int pontoDeOrigem[], pontoDeDestino[],localizacaoAtualizada[];
     private long Id,timestamp, freqAtualizacaoPosicao;
     private boolean chegadaDestino, atingido;
 
@@ -38,22 +38,41 @@ public class AlvosMoveis extends Thread implements IalvosMoveis{
 
     public void setAtingido(boolean atiangido){this.atingido = atiangido;}
 
+    public long getFreqAtualizacaoPosicao() {
+        return freqAtualizacaoPosicao;
+    }
+
+    public void setFreqAtualizacaoPosicao(long freqAtualizacaoPosicao) {
+        this.freqAtualizacaoPosicao = freqAtualizacaoPosicao;
+    }
 
     @Override
-    public int[] localizacaoAtualizada() throws InterruptedException {
-        if(localizacaoAtualizada[1] < pontoDeDestino[1]) {
-            sleep(freqAtualizacaoPosicao);
+    public void run(){
+        moverAteFim();
+    }
+
+    private void moverAteFim() {
+        if (localizacaoAtualizada[1] < pontoDeDestino[1]) {
             atualizaPosicao();
-            return localizacaoAtualizada;
-        }
-        else {
+            chegadaDestino = false;
+            try {
+                Thread.sleep(freqAtualizacaoPosicao);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            moverAteFim();
+        } else {
             chegadaDestino = true;
-            return pontoDeDestino;
         }
     }
 
     private void atualizaPosicao(){
-        localizacaoAtualizada[1] =+ 5;
+        localizacaoAtualizada[1] =- 5;
+    }
+
+    @Override
+    public int[] localizacaoAtualizada() {
+        return localizacaoAtualizada;
     }
 }
 

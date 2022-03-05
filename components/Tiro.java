@@ -4,9 +4,8 @@ public class Tiro extends Thread implements Itiros{
     private int pontoDeOrigem[], pontoDeDestino[],localizacaoAtualizada[];
     private long Id,timestamp, freqAtualizacaoPosicao;
     private boolean contatoComAlvo;
-    private AlvosMoveis alvosMoveis;
 
-    public Tiro(long id, int[] pontoDeOrigem, int[] pontoDeDestino, long timestamp, AlvosMoveis alvo) {
+    public Tiro(long id, int[] pontoDeOrigem, int[] pontoDeDestino, long timestamp) {
         this.Id = id;
         this.pontoDeOrigem = pontoDeOrigem;
         this.pontoDeDestino = pontoDeDestino;
@@ -14,7 +13,6 @@ public class Tiro extends Thread implements Itiros{
         this.timestamp = timestamp;
         this.freqAtualizacaoPosicao = 30;
         this.contatoComAlvo = false;
-        this.alvosMoveis = alvo;
         start();
     }
 

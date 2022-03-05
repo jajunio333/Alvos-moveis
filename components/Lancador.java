@@ -1,7 +1,5 @@
 package components;
 
-import static java.lang.Math.sqrt;
-
 public class Lancador extends  Thread{
     private int posicaoLancador[];
     private Carregador carregador;
@@ -11,26 +9,23 @@ public class Lancador extends  Thread{
         this.carregador = carregador;
     }
 
-    public void carregar() throws InterruptedException {
+    public int carregar() throws InterruptedException {
+        int tempoGasto = 0;
         while (carregador.verificaMunicao()){
             sleep(30);
             carregador.retiraMunicao();
+            tempoGasto += 30;
         }
+        return tempoGasto;
     }
-    public int[] preparar(int[] pontoAtualAlvo,int[]  pontoAtualTiro) throws InterruptedException {
-        sleep(30);//mira
-        return calculoTrajetoria(pontoAtualAlvo, pontoAtualTiro);
+    public int[] preparar(int timestamp, int[]  pontoInicialAlvo) throws InterruptedException {
+        int tempoGasto = 30;
+        sleep(tempoGasto);//mira
+        return calculoTrajetoria(tempoGasto + timestamp, pontoInicialAlvo);
     }
-    public int[] calculoTrajetoria(int[] pontoAtualAlvo,int[]  pontoAtualTiro) {
-        double d = sqrt((pontoAtualTiro[0] - pontoAtualAlvo[0]) ^ 2 + (pontoAtualTiro[1] - pontoAtualAlvo[1]) ^ 2);
-        int[] aux = new int[0];
-        if (d > 0){//?? sempre vai ser maior q 0
-            while(pontoAtualAlvo[1]>pontoAtualTiro[1])
-            aux[0] = pontoAtualTiro[0] + 5;
-            aux[1] = pontoAtualTiro[1] + 5;
-        }
-        return aux;
-    }//teste
+    public int[]calculoTrajetoria(int timestamp,int[]  pontoAtualTiro) {
+
+    }
     public boolean atirar(){
         return true;
     }
