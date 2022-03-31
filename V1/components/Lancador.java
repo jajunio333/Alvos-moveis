@@ -3,6 +3,7 @@ package components;
 public class Lancador extends  Thread{
     private int posicaoLancador[];
     private Carregador carregador;
+    private Tiro tiro;
 
     public Lancador(Carregador carregador, int posicaoLancador[]) {
         this.posicaoLancador = posicaoLancador;
@@ -23,8 +24,9 @@ public class Lancador extends  Thread{
         sleep(tempoGasto);//mira
         return calculoTrajetoria(tempoGasto + timestamp, pontoInicialAlvo);
     }
-    public int[]calculoTrajetoria(int timestamp,int[]  pontoAtualTiro) {
+    public int[] calculoTrajetoria(int timestamp, int[]  pontoAtualTiro) {
 
+        return pontoAtualTiro;
     }
     public boolean atirar(){
         return true;
