@@ -13,11 +13,11 @@ public class Alvo extends Thread {
     public Alvo(long timestamp, int velocidade, Posicao posicaoInicial, Posicao posicaoFinal) {
         super();
         this.id = count + 1;
-        this.posicaoInicial = posicaoInicial;
-        this.posicaoCorrente = posicaoInicial;
+        this.posicaoInicial = new Posicao(posicaoInicial.getX(), posicaoInicial.getY());
+        this.posicaoCorrente = new Posicao(posicaoInicial.getX(), posicaoInicial.getY());
         this.timestamp = timestamp;
         this.velocidade = velocidade;
-        this.posicaoFinal = posicaoFinal;
+        this.posicaoFinal = new Posicao(posicaoFinal.getX(), posicaoFinal.getY());
         tempoPassado = 0L;
         count++;
         Thread t = new Thread(this);

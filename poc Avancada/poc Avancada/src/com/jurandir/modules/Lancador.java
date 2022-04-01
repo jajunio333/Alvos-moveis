@@ -10,22 +10,24 @@ public class Lancador {
     private Tiro tiro;
     private long timestampTiro;
     private int velocidadeTiro;
+    private Carregador carregador;
     private boolean isReady;
 
-    public Lancador(Posicao posicaoCorrente, long timestampTiro, int velocidadeTiro) {
+    public Lancador(Posicao posicaoCorrente, long timestampTiro, int velocidadeTiro, Carregador carregador) {
         this.id = 1+count;
         this.posicaoCorrente = posicaoCorrente;
         this.timestampTiro = timestampTiro;
         this.velocidadeTiro = velocidadeTiro;
-        isReady = false;
+        this.carregador = carregador;
+        isReady = true;
         count++;
     }
 
-    public void iniciar(Carregador carregador, Alvo alvo, long largura, long altura) {
+    public void iniciar(Alvo alvo, long largura, long altura) {
         isReady = false;
         boolean acopladoCarregador = false;
-        carregador.acoplar(this.id);
         while (!acopladoCarregador) {
+            carregador.acoplar(this.id);
             acopladoCarregador = carregador.getPronto(this.id);
             try {
                 Thread.sleep(1); // tempo para nova conferencia
@@ -40,6 +42,7 @@ public class Lancador {
         } else {
             System.out.println("Não é possível acertar o alvo com os parametros informados!");
         }
+        carregador.desacoplar();
         isReady = true;
     }
 
@@ -51,17 +54,17 @@ public class Lancador {
         boolean pontoColisaoEncontrado = false;
         double distancia = 0;
         long tempoColisaoCiclo = 0;
-        long posicaoInicialNova = alvo.getPosicaoInicial().getY() +
-                alvo.direcao()*alvo.getVelocidade()*(carregador.getTempoDeCarga()/alvo.getTimestamp());
+        long posicaoInicialNova = Math.round(alvo.getPosicaoInicial().getY() +
+                alvo.direcao()*alvo.getVelocidade()*((double)(carregador.getTempoDeCarga())/(double)(alvo.getTimestamp())));
         while (!pontoColisaoEncontrado) {
             posicaoAlvoCorrenteParaFutura.setY(posicaoInicialNova +
-                    alvo.direcao()*alvo.getVelocidade()*tempo);
+                    (long) alvo.direcao() *alvo.getVelocidade()*tempo);
 
             distancia = Math.sqrt(Math.pow(Math.abs(posicaoAlvoCorrenteParaFutura.getY() - this.posicaoCorrente.getY()),2) +
-                    Math.pow(Math.abs(posicaoAlvoCorrenteParaFutura.getY() - this.posicaoCorrente.getY()),2));
+                    Math.pow(Math.abs(posicaoAlvoCorrenteParaFutura.getX() - this.posicaoCorrente.getX()),2));
             double angle = Math.atan2((posicaoAlvoCorrenteParaFutura.getY()-this.posicaoCorrente.getY()),
                     (posicaoAlvoCorrenteParaFutura.getX()-this.posicaoCorrente.getX()));
-            tempoColisaoCiclo = Math.round(distancia/(velocidadeTiro*Math.sin(angle)));
+            tempoColisaoCiclo = Math.round(distancia/(velocidadeTiro));
             if(tempoColisaoCiclo*timestampTiro == (tempo*(alvo.getTimestamp()))) {
                 pontoColisaoEncontrado = true;
                 pontoColisao.setY(posicaoAlvoCorrenteParaFutura.getY());
@@ -101,5 +104,9 @@ public class Lancador {
 
     public boolean isReady() {
         return isReady;
+    }
+
+    public int getId() {
+        return id;
     }
 }

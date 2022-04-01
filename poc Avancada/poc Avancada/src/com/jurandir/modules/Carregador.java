@@ -11,9 +11,9 @@ public class Carregador extends Thread {
     private boolean pronto;
     private int idLancador;
 
-    public Carregador(int id, long tempoDeCarga) {
+    public Carregador(long tempoDeCarga) {
         super();
-        this.id = id;
+        this.id = 1 + count;
         this.tempoDeCarga = tempoDeCarga;
         this.pronto = false;
         this.tiros = new Stack<>();

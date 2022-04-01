@@ -1,5 +1,6 @@
 package com.jurandir.factory;
 
+import com.jurandir.modules.Carregador;
 import com.jurandir.modules.Lancador;
 import com.jurandir.modules.Posicao;
 
@@ -12,7 +13,7 @@ public class FactoryLancador {
     public FactoryLancador(int numeroLancadores, long largura) {
         listaLancador = new ArrayList<>();
         for (int i=0; i < numeroLancadores; i++) {
-            listaLancador.add(new Lancador( new Posicao(Math.round(largura/2), 0L), 100, 5));
+            listaLancador.add(new Lancador(new Posicao(Math.round(largura/2), 0L), 15, 5, new Carregador(15)));
         }
     }
 
