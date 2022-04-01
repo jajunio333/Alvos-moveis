@@ -7,7 +7,6 @@ public class Lancador {
     private static int count = 0;
     private int id;
     private Posicao posicaoCorrente;
-    private Tiro tiro;
     private long timestampTiro;
     private int velocidadeTiro;
     private Carregador carregador;
@@ -23,8 +22,9 @@ public class Lancador {
         count++;
     }
 
-    public void iniciar(Alvo alvo, long largura, long altura) {
+    public Tiro iniciar(Alvo alvo, long largura, long altura) {
         isReady = false;
+        Tiro tiro;
         boolean acopladoCarregador = false;
         while (!acopladoCarregador) {
             carregador.acoplar(this.id);
@@ -35,15 +35,16 @@ public class Lancador {
                 System.out.println(e.getMessage());
             }
         }
-        this.tiro = calcularTiro(alvo, largura, altura, carregador);
-        if(this.tiro != null) {
-            carregador.carregarTiro(this.tiro, this.id);
-            carregador.dispararTiro(this.id);
+        tiro = calcularTiro(alvo, largura, altura, carregador);
+        if(tiro != null) {
+            carregador.carregarTiro(tiro, this.id);
+            tiro = carregador.dispararTiro(this.id);
         } else {
             System.out.println("Não é possível acertar o alvo com os parametros informados!");
         }
         carregador.desacoplar();
         isReady = true;
+        return tiro;
     }
 
     private Tiro calcularTiro(Alvo alvo, long largura, long altura, Carregador carregador) {
@@ -89,17 +90,13 @@ public class Lancador {
                 trajetoria.add(new Posicao(posX, posY));
                 j++;
             }
-            return new Tiro(1+Tiro.count(), new Posicao(posicaoCorrente.getX(), posicaoCorrente.getY()), timestampTiro, trajetoria);
+            return Tiro.criarTiro(new Posicao(posicaoCorrente.getX(), posicaoCorrente.getY()), timestampTiro, trajetoria);
         }
         return null;
     }
 
     public static int count() {
         return count;
-    }
-
-    public Tiro getCurrentTiro() {
-        return tiro;
     }
 
     public boolean isReady() {

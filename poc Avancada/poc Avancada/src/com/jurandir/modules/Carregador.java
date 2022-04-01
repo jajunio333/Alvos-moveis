@@ -65,14 +65,16 @@ public class Carregador extends Thread {
         }
     }
 
-    public void dispararTiro(int idLancador) {
+    public Tiro dispararTiro(int idLancador) {
         if (isAcoplado(idLancador)) {
             Tiro t = tiros.pop();
             t.disparar();
+            if (tiros.isEmpty()) {
+                pronto = false;
+            }
+            return t;
         }
-        if(tiros.isEmpty()) {
-            pronto = false;
-        }
+        return null;
     }
 
     public static int count() {

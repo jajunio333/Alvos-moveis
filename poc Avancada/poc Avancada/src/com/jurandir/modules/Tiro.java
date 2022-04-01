@@ -9,12 +9,16 @@ public class Tiro implements Runnable {
     private List<Posicao> trajetoria;
     private static int count = 0;
 
-    public Tiro(int id, Posicao posicaoInicial, long timestamp, List<Posicao> trajetoria) {
-        this.id = id;
+    private Tiro(Posicao posicaoInicial, long timestamp, List<Posicao> trajetoria) {
+        this.id = 1 + count;
         this.timestamp = timestamp;
         this.posicaoCorrente = posicaoInicial;
         this.trajetoria = trajetoria;
         count++;
+    }
+
+    public static Tiro criarTiro(Posicao posicaoInicial, long timestamp, List<Posicao> trajetoria) {
+        return new Tiro(posicaoInicial, timestamp, trajetoria);
     }
 
     public void disparar() {

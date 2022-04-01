@@ -37,26 +37,28 @@ public class Monitoramento implements Runnable{
     public void run() {
         appendEvent("Iniciando monitoramento com id " + this.id);
         Lancador lancador = SelecionarLancador();
-        lancador.iniciar(alvo, largura, altura);
-        boolean monitorar = lancador.getCurrentTiro() != null;
+        Tiro tiro = lancador.iniciar(alvo, largura, altura);
+        boolean monitorar = tiro != null;
         if (!monitorar) {
             appendEvent("Lancador id: " + lancador.getId() + " não consegue acertar o alvo de id: " + alvo.getUnicId());
+        } else {
+            tiro.disparar();
         }
         while (monitorar) {
-            appendEvent("Lancador id: " + lancador.getId() + "; Posição do Tiro de id" +   lancador.getCurrentTiro().getUnicId() + ": x=" + lancador.getCurrentTiro().getPosicaoCorrente().getX() + ", y=" + lancador.getCurrentTiro().getPosicaoCorrente().getY());
-            appendEvent("Posição do Alvo de id" +   alvo.getUnicId() + ": x=" + alvo.getPosicaoCorrente().getX() + ", y=" + alvo.getPosicaoCorrente().getY());
-            if(Math.abs(alvo.getPosicaoCorrente().getX() - lancador.getCurrentTiro().getPosicaoCorrente().getX()) <= tamanhoAlvo &&
-                    Math.abs(alvo.getPosicaoCorrente().getY() - lancador.getCurrentTiro().getPosicaoCorrente().getY()) <= tamanhoAlvo) {
-                appendEvent("Monitoramento de id " + this.id + ":\nAlvo com id " + alvo.getUnicId() + " foi atingido pelo tiro com id " + lancador.getCurrentTiro().getUnicId() + " e lancador de id " + lancador.getId() + " com tamanhoAlvo de " + tamanhoAlvo + " unidades na posição x = "
+            appendEvent("Lancador id: " + lancador.getId() + "; Posição do Tiro de id " +   tiro.getUnicId() + ": x=" + tiro.getPosicaoCorrente().getX() + ", y=" + tiro.getPosicaoCorrente().getY());
+            appendEvent("Posição do Alvo de id " +   alvo.getUnicId() + ": x=" + alvo.getPosicaoCorrente().getX() + ", y=" + alvo.getPosicaoCorrente().getY());
+            if(Math.abs(alvo.getPosicaoCorrente().getX() - tiro.getPosicaoCorrente().getX()) <= tamanhoAlvo &&
+                    Math.abs(alvo.getPosicaoCorrente().getY() - tiro.getPosicaoCorrente().getY()) <= tamanhoAlvo) {
+                appendEvent("Monitoramento de id " + this.id + ":\nAlvo com id " + alvo.getUnicId() + " foi atingido pelo tiro com id " + tiro.getUnicId() + " e lancador de id " + lancador.getId() + " com tamanhoAlvo de " + tamanhoAlvo + " unidades na posição x = "
                         + alvo.getPosicaoCorrente().getX() + " y = " + alvo.getPosicaoCorrente().getY());
                 monitorar = false;
             }
             else if(alvo.getPosicaoCorrente().getY() + tamanhoAlvo < 0 ||
-                    lancador.getCurrentTiro().getPosicaoCorrente().getX() - tamanhoAlvo > largura  ||
-                    lancador.getCurrentTiro().getPosicaoCorrente().getX() + tamanhoAlvo < 0 ||
-                    lancador.getCurrentTiro().getPosicaoCorrente().getY() - tamanhoAlvo > altura) {
+                    tiro.getPosicaoCorrente().getX() - tamanhoAlvo > largura  ||
+                    tiro.getPosicaoCorrente().getX() + tamanhoAlvo < 0 ||
+                    tiro.getPosicaoCorrente().getY() - tamanhoAlvo > altura) {
 
-                appendEvent("Alvo de id " + alvo.getUnicId() + " ou tiro de id " + lancador.getCurrentTiro().getUnicId() + " sairam dos limtes do plano");
+                appendEvent("Alvo de id " + alvo.getUnicId() + " ou tiro de id " + tiro.getUnicId() + " sairam dos limtes do plano");
                 monitorar = false;
             }
             try {
