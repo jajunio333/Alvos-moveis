@@ -21,5 +21,4 @@ public class Rec {
 		double[] _m = rec.getReconciledFlow();
 		return _m[2];// Posicao 2 => F3 apos execucao da RD
 	}
-
 }

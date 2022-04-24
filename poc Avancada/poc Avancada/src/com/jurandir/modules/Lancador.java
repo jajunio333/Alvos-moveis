@@ -114,7 +114,7 @@ public class Lancador extends Thread{
             S1aS4.add(gerador.nextDouble()/1.0); //
         }
         return new Rec().RecDados(F1aF4.get(0), F1aF4.get(1), F1aF4.get(2), F1aF4.get(3),
-                                  S1aS4.get(0), S1aS4.get(1), S1aS4.get(2), S1aS4.get(3));
+                                  S1aS4.get(0), S1aS4.get(1), 1, S1aS4.get(3));
 
     }
 
