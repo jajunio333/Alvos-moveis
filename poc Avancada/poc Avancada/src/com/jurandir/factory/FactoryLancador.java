@@ -6,6 +6,7 @@ import com.jurandir.modules.Posicao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class FactoryLancador {
     private List<Lancador> listaLancador;
@@ -20,4 +21,5 @@ public class FactoryLancador {
     public List<Lancador> getListaLancador() {
         return listaLancador;
     }
+
 }

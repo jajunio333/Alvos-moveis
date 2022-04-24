@@ -2,7 +2,7 @@ package com.jurandir.modules;
 
 import java.util.List;
 
-public class Tiro implements Runnable {
+public class Tiro extends Thread {
     private int id;
     private Posicao posicaoCorrente;
     private long timestamp;
@@ -17,13 +17,13 @@ public class Tiro implements Runnable {
         count++;
     }
 
-    public static Tiro criarTiro(Posicao posicaoInicial, long timestamp, List<Posicao> trajetoria) {
-        return new Tiro(posicaoInicial, timestamp, trajetoria);
-    }
-
     public void disparar() {
         Thread t = new Thread(this);
         t.start();
+    }
+
+    public static Tiro criarTiro(Posicao posicaoInicial, long timestamp, List<Posicao> trajetoria) {
+        return new Tiro(posicaoInicial, timestamp, trajetoria);
     }
     
     @Override

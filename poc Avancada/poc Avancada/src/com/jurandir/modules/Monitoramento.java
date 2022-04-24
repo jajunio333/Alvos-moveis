@@ -45,7 +45,7 @@ public class Monitoramento implements Runnable{
             tiro.disparar();
         }
         while (monitorar) {
-            appendEvent("Lancador id: " + lancador.getId() + "; Posição do Tiro de id " +   tiro.getUnicId() + ": x=" + tiro.getPosicaoCorrente().getX() + ", y=" + tiro.getPosicaoCorrente().getY());
+            appendEvent("Lancador id: " + lancador.getId() + "; Posição do Tiro de id " +   tiro.getUnicId() + ": x=" + tiro.getPosicaoCorrente().getX() + ", y=" + tiro.getPosicaoCorrente().getY() + " velocidade: " + lancador.velocidadeTiroModificada());
             appendEvent("Posição do Alvo de id " +   alvo.getUnicId() + ": x=" + alvo.getPosicaoCorrente().getX() + ", y=" + alvo.getPosicaoCorrente().getY());
             if(Math.abs(alvo.getPosicaoCorrente().getX() - tiro.getPosicaoCorrente().getX()) <= tamanhoAlvo &&
                     Math.abs(alvo.getPosicaoCorrente().getY() - tiro.getPosicaoCorrente().getY()) <= tamanhoAlvo) {

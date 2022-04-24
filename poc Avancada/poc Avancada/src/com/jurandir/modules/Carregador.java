@@ -30,7 +30,7 @@ public class Carregador extends Thread {
         pronto = true;
     }
 
-    public void acoplar(int idLancador) { //Talvez remover synchronized
+    public void acoplar(int idLancador) {
         if(!isAcoplado(idLancador)) {
             this.idLancador = idLancador;
             Thread t = new Thread(this);
@@ -38,7 +38,7 @@ public class Carregador extends Thread {
         }
     }
 
-    public synchronized void desacoplar() { //Talvez remover synchronized
+    public synchronized void desacoplar() {
         this.idLancador = 0;
         this.pronto = false;
     }

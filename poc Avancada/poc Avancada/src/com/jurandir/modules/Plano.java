@@ -3,13 +3,7 @@ package com.jurandir.modules;
 import com.jurandir.factory.FactoryAlvo;
 import com.jurandir.factory.FactoryLancador;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Stream;
-
-public class Plano {
+public class Plano extends Thread{
     private static final String PATH = "poc Avancada/files/";
     private long largura;
     private long altura;
@@ -23,10 +17,11 @@ public class Plano {
         this.tamanhoAlvo = tamanhoAlvo;
         this.numeroInteracoes = numeroInteracoes;
         this.numeroLancadores = numeroLancadores;
+        Thread t = new Thread(this);
+        t.start();
     }
-
+    @Override
     public void run() {
-        limparArquivos();
         FactoryLancador factoryLancador = new FactoryLancador(numeroLancadores, largura);
         while (numeroInteracoes > 0) {
             Alvo alvo = null;
@@ -39,9 +34,5 @@ public class Plano {
             new Monitoramento(factoryLancador.getListaLancador(), alvo, largura, altura, tamanhoAlvo);
             numeroInteracoes --;
         }
-    }
-
-    private void limparArquivos() {
-        //deletar arquivos da pasta files, se existir.
     }
 }
